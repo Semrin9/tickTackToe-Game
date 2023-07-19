@@ -30,7 +30,7 @@ function initializeGame() {
 function cellClicked() {
     const cellIndex = this.getAttribute("cellIndex");
 
-    if (options[cellIndex] != "" || !running) {
+    if (options[cellIndex] !== "" || !running) {
         return;
     }
 
@@ -40,28 +40,20 @@ function cellClicked() {
 }
 
 function aiTurn() {
-    let level = checkLevel();
+    const level = checkLevel();
     if (level == "easy") {
-        if (currentPlayer == "O") {
+        if (currentPlayer === "O") {
             let random = Math.floor(Math.random() * 9);
-            if (options[random] == "" && running) {
-                updateCell(cells[random], random);
-                checkWinner();
-            } else {
-                while (options[random] != "" && running) {
-                    let random = Math.floor(Math.random() * 9);
-                    if (options[random] == "") {
-                        updateCell(cells[random], random);
-                        checkWinner();
-                        break;
-                    }
-                }
+            while (options[random] !== "" && running) {
+                random = Math.floor(Math.random() * 9);
             }
+            updateCell(cells[random], random);
+            checkWinner();
         }
     } else if (level === "medium") {
         if (currentPlayer === "O") {
-            let winningMove = getWinningMove("O");
-            let blockingMove = getWinningMove("X");
+            const winningMove = getWinningMove("O");
+            const blockingMove = getWinningMove("X");
 
             if (winningMove !== -1 && running) {
                 updateCell(cells[winningMove], winningMove);
@@ -87,7 +79,7 @@ function aiTurn() {
             for (let i = 0; i < options.length; i++) {
                 if (options[i] === "") {
                     options[i] = currentPlayer;
-                    let score = minimax(options, 0, false);
+                    const score = minimax(options, 0, false);
                     options[i] = ""; // Undo the move
 
                     if (score > bestScore) {
@@ -108,9 +100,7 @@ function aiTurn() {
 function getWinningMove(player) {
     for (let i = 0; i < winConditions.length; i++) {
         const condition = winConditions[i];
-        const cellA = options[condition[0]];
-        const cellB = options[condition[1]];
-        const cellC = options[condition[2]];
+        const [cellA, cellB, cellC] = condition.map(index => options[index]);
 
         if (cellA === player && cellB === player && cellC === "") {
             return condition[2];
@@ -125,7 +115,7 @@ function getWinningMove(player) {
 }
 
 function getAvailableMoves() {
-    let availableMoves = [];
+    const availableMoves = [];
 
     for (let i = 0; i < options.length; i++) {
         if (options[i] === "") {
@@ -141,7 +131,7 @@ function getRandomMove(moves) {
         return -1;
     }
 
-    let randomIndex = Math.floor(Math.random() * moves.length);
+    const randomIndex = Math.floor(Math.random() * moves.length);
     return moves[randomIndex];
 }
 
@@ -158,7 +148,7 @@ function minimax(board, depth, isMaximizingPlayer) {
         for (let i = 0; i < board.length; i++) {
             if (board[i] === "") {
                 board[i] = "O";
-                let score = minimax(board, depth + 1, false);
+                const score = minimax(board, depth + 1, false);
                 board[i] = ""; // Undo the move
                 bestScore = Math.max(score, bestScore);
             }
@@ -193,9 +183,7 @@ function changePlayer() {
 function checkResult() {
     for (let i = 0; i < winConditions.length; i++) {
         const condition = winConditions[i];
-        const cellA = options[condition[0]];
-        const cellB = options[condition[1]];
-        const cellC = options[condition[2]];
+        const [cellA, cellB, cellC] = condition.map(index => options[index]);
 
         if (cellA === "" || cellB === "" || cellC === "") {
             continue;
@@ -222,9 +210,8 @@ function checkWinner() {
 
     for (let i = 0; i < winConditions.length; i++) {
         const condition = winConditions[i]; // [0, 1, 2] -> [3, 4, 5] -> [6, 7, 8]....
-        const cellA = options[condition[0]]; // options[0] -> options[3] -> options[6]....
-        const cellB = options[condition[1]]; // options[1] -> options[4] -> options[7]....
-        const cellC = options[condition[2]]; // options[2] -> options[5] -> options[8]....
+        const [cellA, cellB, cellC] = condition.map(index => options[index]);
+
 
         if (cellA == "" || cellB == "" || cellC == "") {
             continue;
@@ -257,7 +244,7 @@ function restartGame() {
 }
 
 function checkLevel() {
-    var value = document.getElementsByName("level");
-    var selectValue = Array.from(value).find(radio => radio.checked);
+    const value = document.getElementsByName("level");
+    const selectValue = Array.from(value).find(radio => radio.checked);
     return selectValue.value;
 }
