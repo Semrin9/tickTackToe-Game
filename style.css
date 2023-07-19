@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;900&family=Permanent+Marker&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;0,900;1,200;1,800&family=Ubuntu:ital,wght@0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+
+body {
+    background: linear-gradient(90deg, #f64445 0%, #611cac 80%);
+    text-align: center;
+}
+
+.title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 4rem;
+    margin: 5%;
+}
+
+.cell {
+    width: 9rem;
+    height: 9rem;
+    border: 4px solid;
+    box-shadow: 0 0 0 2px;
+    line-height: 9rem;
+    font-size: 6rem;
+    cursor: pointer;
+}
+
+#gameContainer {
+    text-align: center;
+    height: 992px;
+}
+
+#cellContainer {
+    font-family: 'Permanent Marker', cursive;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    width: 28.2rem;
+    margin: 0 auto;
+}
+
+#restartBtn {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin: 1.5%;
+    padding: 0.8% 1.5%;
+    border-radius: 10px;
+    border: 4px solid;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#restartBtn:hover {
+    color: rgb(190, 188, 188)
+}
+
+#restartBtn:active {
+    transform: scale(0.9);
+}
+
+.cell:hover {
+}
